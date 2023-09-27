@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.abcbank.entity.Contact;
 import com.example.abcbank.service.ContactsService;
@@ -43,8 +45,8 @@ public class ContactsController {
 	}
 
 	@PostMapping("/contacts")
-	public Contact saveDrone(@RequestBody Contact contact) {
-		return contactsService.saveContact(contact);
+	public Contact saveDrone(@RequestBody Contact contact,  @RequestParam(value="file", required=true) MultipartFile file) {
+		return contactsService.saveContact(contact, file);
 	}
 
 	@PutMapping("/contacts/{id}")

@@ -2,6 +2,8 @@ package com.example.abcbank.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.abcbank.entity.Contact;
 
 public interface ContactsService {
@@ -10,7 +12,7 @@ public interface ContactsService {
 	List<Contact> fetchContactsList();
 
 	//save new contact
-	Contact saveContact(Contact contact);
+	Contact saveContact(Contact contact, MultipartFile file);
 
 	//update selected contact
 	Contact updateContact(Contact contact, Long id);

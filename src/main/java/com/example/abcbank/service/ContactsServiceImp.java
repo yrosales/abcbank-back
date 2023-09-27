@@ -1,17 +1,25 @@
 package com.example.abcbank.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.abcbank.entity.Contact;
 import com.example.abcbank.repository.ContactsRepository;
 
 @Service
-public class contactsServiceImpl implements ContactsService {
+public class ContactsServiceImp implements ContactsService {
+
+	private final Logger logger = LoggerFactory.getLogger(ContactsServiceImp.class);
 
 	@Autowired
 	private ContactsRepository contactsRepository;
@@ -22,7 +30,21 @@ public class contactsServiceImpl implements ContactsService {
 	}
 
 	@Override
-	public Contact saveContact(Contact contact) {
+	public Contact saveContact(Contact contact, MultipartFile file) {
+		if (file != null) {
+			byte[] filecontent = null;
+			try {
+				InputStream inputStream = file.getInputStream();
+				if (inputStream == null) {
+					logger.debug("file InputStream is null");
+				}
+				filecontent = IOUtils.toByteArray(inputStream);
+				contact.setPersonalPhoto(filecontent);
+			} catch (IOException ex) {
+				logger.error("Error Saving uploaded file");
+			}
+			contact.setPersonalPhoto(filecontent);
+		}
 		return contactsRepository.save(contact);
 	}
 
@@ -73,11 +95,11 @@ public class contactsServiceImpl implements ContactsService {
 		return contactsWithAge;
 	}
 
-	private static int calculateAge(Calendar fechaNac) {
+	private static int calculateAge(Calendar dayOfBirth) {
 		Calendar today = Calendar.getInstance();
-		int diffYear = today.get(Calendar.YEAR) - fechaNac.get(Calendar.YEAR);
-		int diffMonth = today.get(Calendar.MONTH) - fechaNac.get(Calendar.MONTH);
-		int diffDay = today.get(Calendar.DAY_OF_MONTH) - fechaNac.get(Calendar.DAY_OF_MONTH);
+		int diffYear = today.get(Calendar.YEAR) - dayOfBirth.get(Calendar.YEAR);
+		int diffMonth = today.get(Calendar.MONTH) - dayOfBirth.get(Calendar.MONTH);
+		int diffDay = today.get(Calendar.DAY_OF_MONTH) - dayOfBirth.get(Calendar.DAY_OF_MONTH);
 		if (diffMonth < 0 || (diffMonth == 0 && diffDay < 0)) {
 			diffYear = diffYear - 1;
 		}
