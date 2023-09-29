@@ -47,7 +47,7 @@ public class ContactsController {
 	}
 
 	@PostMapping("/contacts")
-	public Contact saveDrone(@RequestBody Contact contact,  @RequestParam(value="file", required=true) MultipartFile file) {
+	public Contact saveDrone(@RequestBody Contact contact,  @RequestParam(value="file", required=false) MultipartFile file) {
 		return contactsService.saveContact(contact, file);
 	}
 
