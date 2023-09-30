@@ -51,7 +51,8 @@ public class ContactsServiceImp implements ContactsService {
 	@Override
 	public Contact updateContact(Contact updContact, Long id) {
 		return contactsRepository.findById(id).map(contact -> {
-			contact.setFirstName(contact.getFirstName());
+			contact.setFirstName(updContact.getFirstName());
+			contact.setSecondName(updContact.getSecondName());
 			contact.setDateOfBirth(updContact.getDateOfBirth());
 			contact.setAddresses(updContact.getAddresses());
 			contact.setPhoneNumbers(updContact.getPhoneNumbers());
