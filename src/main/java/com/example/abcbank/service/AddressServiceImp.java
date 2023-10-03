@@ -3,10 +3,12 @@ package com.example.abcbank.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.abcbank.entity.Address;
 import com.example.abcbank.repository.AddressRepository;
 
+@Service
 public class AddressServiceImp implements AddressService {
 
     @Autowired

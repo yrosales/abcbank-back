@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -20,6 +23,7 @@ public class Address {
 
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="CONTACT_ID")
+    @OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Contact contact;
 

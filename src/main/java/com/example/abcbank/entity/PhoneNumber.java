@@ -1,5 +1,6 @@
 package com.example.abcbank.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,8 +22,9 @@ public class PhoneNumber {
 	
 	private String number;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
 	@JoinColumn(name="CONTACT_ID")
+    @OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Contact contact;
 
