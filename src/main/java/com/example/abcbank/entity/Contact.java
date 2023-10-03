@@ -1,12 +1,15 @@
 package com.example.abcbank.entity;
 
-
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Contact {
@@ -14,30 +17,31 @@ public class Contact {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	private String firstName;
-	
+
 	private String secondName;
-	
-	private String addresses;
-	
+
+	@OneToMany(mappedBy = "contact")
+	@JsonIgnoreProperties("contact")
+	private List<Address> addresses;
+
 	private Date dateOfBirth;
-	
-	private String phoneNumbers;
-	
+
+	@OneToMany(mappedBy = "contact")
+	@JsonIgnoreProperties("contact")
+	private List<PhoneNumber> phoneNumbers;
+
 	private byte[] personalPhoto;
-	
+
 	public Contact() {
-		
+
 	}
 
-	public Contact(String firstName, String secondName, String addresses, Date dateOfBirth, String phoneNumbers, byte[] personalPhoto) {
-		super();
+	public Contact(String firstName, String secondName, Date dateOfBirth, byte[] personalPhoto) {
 		this.firstName = firstName;
 		this.secondName = secondName;
-		this.addresses = addresses;
 		this.dateOfBirth = dateOfBirth;
-		this.phoneNumbers = phoneNumbers;
 		this.personalPhoto = personalPhoto;
 	}
 
@@ -53,6 +57,10 @@ public class Contact {
 		return firstName;
 	}
 
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
 	public String getSecondName() {
 		return secondName;
 	}
@@ -61,15 +69,11 @@ public class Contact {
 		this.secondName = secondName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getAddresses() {
+	public List<Address> getAddresses() {
 		return addresses;
 	}
 
-	public void setAddresses(String addresses) {
+	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
 	}
 
@@ -81,11 +85,11 @@ public class Contact {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public String getPhoneNumbers() {
+	public List<PhoneNumber> getPhoneNumbers() {
 		return phoneNumbers;
 	}
 
-	public void setPhoneNumbers(String phoneNumbers) {
+	public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
 		this.phoneNumbers = phoneNumbers;
 	}
 
@@ -98,9 +102,51 @@ public class Contact {
 	}
 
 	@Override
-	public String toString() {
-		return "Contacts [firstName=" + firstName + ", addresses=" + addresses + "]";
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((secondName == null) ? 0 : secondName.hashCode());
+		result = prime * result + ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
+		return result;
 	}
-	
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Contact other = (Contact) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (secondName == null) {
+			if (other.secondName != null)
+				return false;
+		} else if (!secondName.equals(other.secondName))
+			return false;
+		if (dateOfBirth == null) {
+			if (other.dateOfBirth != null)
+				return false;
+		} else if (!dateOfBirth.equals(other.dateOfBirth))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Contact [firstName=" + firstName + ", secondName=" + secondName + "]";
+	}
+
 }
