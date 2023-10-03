@@ -25,6 +25,11 @@ public class AddressServiceImp implements AddressService {
     }
 
     @Override
+    public void addAll(List<Address> addresses) {
+        addressRepository.saveAll(addresses);
+    }
+
+    @Override
     public Address update(Address editedAddress, Long id) {
         Address address = addressRepository.findById(id).get();
         address.setAddress(editedAddress.getAddress());

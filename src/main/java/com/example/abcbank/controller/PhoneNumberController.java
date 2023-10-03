@@ -1,5 +1,7 @@
 package com.example.abcbank.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +22,11 @@ public class PhoneNumberController {
     @PostMapping("/phone-number")
     PhoneNumber addPhoneNumber (@RequestBody PhoneNumber phoneNumber) {
         return phoneNumberService.add(phoneNumber);
+    }
+
+    @PostMapping("/phone-numbers")
+    void addPhoneNumbers (@RequestBody List<PhoneNumber> phoneNumbers) {
+        phoneNumberService.addAll(phoneNumbers);
     }
 
     @PostMapping("/phone-number/{id}")

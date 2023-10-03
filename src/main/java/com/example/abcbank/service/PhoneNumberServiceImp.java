@@ -25,6 +25,11 @@ public class PhoneNumberServiceImp implements PhoneNumberService{
     }
 
     @Override
+    public void addAll(List<PhoneNumber> phoneNumbers) {
+        phoneNumberRepository.saveAll(phoneNumbers);
+    }
+
+    @Override
     public PhoneNumber update(PhoneNumber editedPhoneNumber, Long id) {
         PhoneNumber phoneNumber = phoneNumberRepository.findById(id).get();
         phoneNumber.setNumber(editedPhoneNumber.getNumber());
@@ -35,5 +40,6 @@ public class PhoneNumberServiceImp implements PhoneNumberService{
     public void delete(Long id) {
         phoneNumberRepository.deleteById(id);
     }
+
     
 }

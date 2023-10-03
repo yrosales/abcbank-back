@@ -1,5 +1,7 @@
 package com.example.abcbank.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,12 +22,17 @@ public class AddressController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/address")
-    Address addAddreess (@RequestBody Address address) {
+    Address addAddress (@RequestBody Address address) {
         return addressService.add(address);
     }
 
+    @PostMapping("/addresses")
+    void addAddresses (@RequestBody List<Address> addresses) {
+        addressService.addAll(addresses);
+    }
+
     @DeleteMapping("/address/{id}")
-    String deletePhoneNumber(@PathVariable("id") Long id){
+    String deleteAddress(@PathVariable("id") Long id){
         addressService.delete(id);
         return "Address deleted";
     }
