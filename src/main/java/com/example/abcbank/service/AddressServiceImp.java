@@ -41,4 +41,8 @@ public class AddressServiceImp implements AddressService {
         addressRepository.deleteById(id);
     }
 
+    @Override
+    public void deleteAll(List<Address> addresses) {
+        addressRepository.deleteAll(addresses);
+    }
 }

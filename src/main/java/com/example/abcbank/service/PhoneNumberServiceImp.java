@@ -41,5 +41,9 @@ public class PhoneNumberServiceImp implements PhoneNumberService{
         phoneNumberRepository.deleteById(id);
     }
 
-    
+    @Override
+    public void deleteAll(List<PhoneNumber> phoneNumbers) {
+        phoneNumberRepository.deleteAll(phoneNumbers);
+    }
+
 }

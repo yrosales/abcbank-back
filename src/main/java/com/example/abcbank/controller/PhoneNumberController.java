@@ -39,4 +39,10 @@ public class PhoneNumberController {
         phoneNumberService.delete(id);
         return "Phone number deleted";
     }
+
+    @DeleteMapping("/contact-phone-numbers")
+    String deletePhoneNumbers(@RequestBody List<PhoneNumber> phoneNumbers){
+        phoneNumberService.deleteAll(phoneNumbers);
+        return "Phone numbers deleted";
+    }
 }

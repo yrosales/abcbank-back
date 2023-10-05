@@ -10,4 +10,5 @@ public interface AddressService {
     void addAll(List<Address> addresses);
     Address update(Address address, Long id);
     void delete(Long id);
+    void deleteAll(List<Address> addresses);
 }

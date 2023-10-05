@@ -11,4 +11,5 @@ public interface PhoneNumberService {
     void addAll(List<PhoneNumber> phoneNumbers);
     PhoneNumber update(PhoneNumber phoneNumber, Long id);
     void delete(Long id);
+    void deleteAll(List<PhoneNumber> phoneNumbers);
 }
